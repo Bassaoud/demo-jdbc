@@ -1,11 +1,12 @@
-package fr.diginamic.connexion;
+package fr.diginamic.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
-public class TestConnexionJdbc {
+public class TestDelete {
 
 	public static void main(String[] args) {
 
@@ -22,16 +23,28 @@ public class TestConnexionJdbc {
 
 			System.out.println("Driver non trouvé");
 		}
+		Connection maConnection = null;
 		try {
 			// Etablit la connexion
-			Connection maConnection = DriverManager.getConnection(url, userName, passWord);
+			maConnection = DriverManager.getConnection(url, userName, passWord);
 			System.out.println("Connexion établie");
-			maConnection.close();
+
 		} catch (SQLException e) {
 
 			System.out.println("Impossible d'établir une connexion");
 		}
 
+		try {
+			Statement monStatement = maConnection.createStatement();
+			int nb = monStatement
+					.executeUpdate("DELETE FROM fournisseur WHERE nom='Maison des Peintures'");
+			maConnection.commit();
+			maConnection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Echec");
+		}
 	}
 
 }
