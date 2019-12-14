@@ -61,8 +61,6 @@ public class TestSelect {
 		}
 	}
 
-	public static void ToString() {
-
 	}
 
-}
+
