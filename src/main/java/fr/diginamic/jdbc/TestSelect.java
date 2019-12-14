@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import fr.diginamic.jdbc.entites.Fournisseur;
 
 public class TestSelect {
 	public static void main(String[] args) {
@@ -38,7 +41,17 @@ public class TestSelect {
 		try {
 			Statement monStatement = maConnection.createStatement();
 			résultats = monStatement.executeQuery("SELECT * FROM fournisseur");
-			//System.out.println(résultats);
+			// System.out.println(résultats);
+			ArrayList<Fournisseur> fournisseurs = new ArrayList<>();
+			while (résultats.next()) {
+				Integer id = résultats.getInt("ID");
+				String nom = résultats.getString("NOM");
+				
+				Fournisseur fouCourant = new Fournisseur(id, nom);
+				fournisseurs.add(fouCourant);
+				
+				System.out.println(fournisseurs);
+			}
 			maConnection.commit();
 			maConnection.close();
 		} catch (SQLException e) {
@@ -47,7 +60,9 @@ public class TestSelect {
 			System.out.println("Echec");
 		}
 	}
-public static void ToString() {
-	
-}
+
+	public static void ToString() {
+
+	}
+
 }
